@@ -1,0 +1,11 @@
+{
+    "dart.lineLength": 120,
+    "dart.formatOnSave": true,
+    "editor.formatOnType": true,
+    "files.exclude": {
+        ".fvm/": true
+    },
+    "files.watcherExclude": {
+        "**/.fvm/": true
+    }
+}

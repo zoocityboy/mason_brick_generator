@@ -1,0 +1,70 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "create",
+            "cwd": "example",
+            "request": "launch",
+            "type": "dart",
+            "program": "../bin/mason_tpl.dart",
+            "args": [
+                "create",
+            ],
+        },
+        {
+            "name": "generate",
+            "cwd": "example",
+            "request": "launch",
+            "type": "dart",
+            "program": "../bin/mason_tpl.dart",
+            "args": [
+                "generate",
+            ],
+        },
+        {
+            "name": "generate - eit_feature",
+            "cwd": "example",
+            "request": "launch",
+            "type": "dart",
+            "program": "../bin/mason_tpl.dart",
+            "args": [
+                "generate",
+                "-t",
+                "eit_feature"
+            ],
+        },
+        {
+            "name": "init",
+            "cwd": "example",
+            "request": "launch",
+            "type": "dart",
+            "program": "../bin/mason_tpl.dart",
+            "args": [
+                "init",
+            ],
+        },
+        {
+            "name": "list",
+            "cwd": "example",
+            "request": "launch",
+            "type": "dart",
+            "program": "../bin/mason_tpl.dart",
+            "args": [
+                "list",
+            ],
+        },
+        {
+            "name": "validate",
+            "cwd": "example",
+            "request": "launch",
+            "type": "dart",
+            "program": "../bin/mason_tpl.dart",
+            "args": [
+                "validate",
+            ],
+        }
+    ]
+}
