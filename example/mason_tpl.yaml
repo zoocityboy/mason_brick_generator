@@ -68,6 +68,9 @@ mason_tpl:
       - name: TplFeatureName
         type: content
         value: "{{name.pascalCase()}}"
+      - name: tpl_feature_name
+        type: import
+        value: "{{name.snakeCase()}}"
 
   # - template: eit_profile
   #   description: Profile template
