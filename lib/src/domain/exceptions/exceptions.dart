@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-/// Base Exception for Mason Template
+/// Base Exception for Mason Brick Generator
 class MasonTplException implements Exception {
   const MasonTplException(this.message);
   final String message;
@@ -8,12 +8,12 @@ class MasonTplException implements Exception {
 
 /// Configuration file not found on project
 class MasonTplConfigFileNotFound extends MasonTplException {
-  const MasonTplConfigFileNotFound() : super('mason_tpl.yaml not found');
+  const MasonTplConfigFileNotFound() : super('mason_brick_generator.yaml not found');
 }
 
 /// Template not found in configuration
 class TemplateNotFound extends MasonTplException {
-  const TemplateNotFound() : super('Template not found');
+  const TemplateNotFound(String? message) : super(message ?? 'Template not found');
 }
 
 /// Invalid format of template
@@ -30,7 +30,7 @@ class MasonNotInitialized extends MasonTplException {
   String toString() => '$message $path';
 }
 
-/// Mason Template is not initialized
+/// Mason Brick Generator is not initialized
 class MasonTplNotInitialized extends MasonTplException {
   const MasonTplNotInitialized(this.path) : super('Mason Tpl not initialized');
   final String path;

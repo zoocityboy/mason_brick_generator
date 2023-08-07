@@ -9,7 +9,7 @@
             "cwd": "example",
             "request": "launch",
             "type": "dart",
-            "program": "../bin/mason_tpl.dart",
+            "program": "../bin/mason_brick_generator.dart",
             "args": [
                 "create",
             ],
@@ -19,7 +19,7 @@
             "cwd": "example",
             "request": "launch",
             "type": "dart",
-            "program": "../bin/mason_tpl.dart",
+            "program": "../bin/mason_brick_generator.dart",
             "args": [
                 "generate",
             ],
@@ -29,7 +29,7 @@
             "cwd": "example",
             "request": "launch",
             "type": "dart",
-            "program": "../bin/mason_tpl.dart",
+            "program": "../bin/mason_brick_generator.dart",
             "args": [
                 "generate",
                 "-t",
@@ -41,7 +41,7 @@
             "cwd": "example",
             "request": "launch",
             "type": "dart",
-            "program": "../bin/mason_tpl.dart",
+            "program": "../bin/mason_brick_generator.dart",
             "args": [
                 "init",
             ],
@@ -51,7 +51,7 @@
             "cwd": "example",
             "request": "launch",
             "type": "dart",
-            "program": "../bin/mason_tpl.dart",
+            "program": "../bin/mason_brick_generator.dart",
             "args": [
                 "list",
             ],
@@ -61,7 +61,7 @@
             "cwd": "example",
             "request": "launch",
             "type": "dart",
-            "program": "../bin/mason_tpl.dart",
+            "program": "../bin/mason_brick_generator.dart",
             "args": [
                 "validate",
             ],

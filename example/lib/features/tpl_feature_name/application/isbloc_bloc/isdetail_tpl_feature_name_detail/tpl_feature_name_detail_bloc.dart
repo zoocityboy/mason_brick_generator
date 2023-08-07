@@ -10,6 +10,7 @@ import '../../../domain/repositories/tpl_feature_name_repository.dart';
 part 'tpl_feature_name_detail_event.dart';
 part 'tpl_feature_name_detail_state.dart';
 
+/// [TplFeatureNameDetailBloc] will be used in [TplFeatureNameDetail] screen
 class TplFeatureNameDetailBloc extends Bloc<TplFeatureNameDetailEvent, TplFeatureNameDetailState> {
   TplFeatureNameDetailBloc(this.repository) : super(const TplFeatureNameDetailInitialState()) {
     on<CustomTplFeatureNameDetailEvent>(_onCustomTplFeatureNameDetailEvent);
@@ -21,9 +22,7 @@ class TplFeatureNameDetailBloc extends Bloc<TplFeatureNameDetailEvent, TplFeatur
   FutureOr<void> _onCustomTplFeatureNameDetailEvent(
     CustomTplFeatureNameDetailEvent event,
     Emitter<TplFeatureNameDetailState> emit,
-  ) {
-    // TODO: Add Logic
-  }
+  ) {}
 
   FutureOr<void> _onFetchTplFeatureNameDetailEvent(
     FetchTplFeatureNameDetailEvent event,

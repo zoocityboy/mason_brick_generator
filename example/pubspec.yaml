@@ -45,7 +45,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   json_serializable: ^6.7.1
-  mason_tpl:
+  mason_brick_generator:
     path: ../
   test: ^1.21.0
   zoo_lints: ^3.0.0

@@ -38,7 +38,7 @@ class ConfigYaml {
     // final pubspec = await configFile.readAsString();
     // final yaml = loadYaml(pubspec) as YamlMap;
 
-    // /// Check if mason_tpl key exists
+    // /// Check if mason_brick_generator key exists
     // if (!yaml.containsKey(Constants.masonTplKey)) {
     //   throw const TemplateNotFound();
     // }

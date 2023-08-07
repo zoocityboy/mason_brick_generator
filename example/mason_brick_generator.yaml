@@ -1,4 +1,4 @@
-mason_tpl:
+mason_brick_generator:
   - template: eit_feature
     description: Feature template for Embedit Platform.
     source: lib/features/tpl_feature_name
@@ -71,7 +71,16 @@ mason_tpl:
       - name: tpl_feature_name
         type: import
         value: "{{name.snakeCase()}}"
-
+  - template: eit_feature_structure
+    description: Embedit Platform Feature Structure
+    source: lib/features/structure
+    replace:
+    vars:
+      name:
+        type: string
+        description: Your name
+        default: Dash
+        prompt: What is your name?
   # - template: eit_profile
   #   description: Profile template
   #   source: src/features/tpl_profile_name

@@ -3,13 +3,17 @@ import 'package:meta/meta.dart';
 @protected
 abstract class Localisation {
   // Generic
+  static const String generating = 'Generater is processing';
   static const String processing = 'Processing';
+  static const String generatingReplaceContent = 'Processing content...';
+  static const String generatingReplacePath = 'Processing paths...';
+  static const String postprocessing = 'Postprocessing...';
   static const String icon = '🎉';
 
   /// TUI settings
-  static const String cmd = 'mason_tpl';
+  static const String cmd = 'mason_brick_generator';
   static const String cmdDescription = '$icon Generate brick template from source code.';
-  static const String cmdFooter = '\nCreated by 🦏 zoocityboy See https://github.com/zoocityboy/mason-tpl';
+  static const String cmdFooter = '\nCreated by 🦏 zoocityboy See https://github.com/zoocityboy/mason-brick-generator';
 
   /// Options
   static const templateKey = 'template';

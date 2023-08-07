@@ -13,7 +13,7 @@ import 'init.dart';
 import 'list.dart';
 import 'validate.dart';
 
-/// Command Runner for Mason Template
+/// Command Runner for Mason Brick Generator
 class MasonTplCommandRunner extends CommandRunner<void> with CheckMixin, ConsoleMixin {
   ///
   MasonTplCommandRunner() : super(Localisation.cmd, Localisation.cmdDescription) {

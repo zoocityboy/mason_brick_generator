@@ -30,7 +30,7 @@ class GenerateCommand extends BrandCommand<void> with ConsoleMixin, ConfigMixin,
 
     if (tplvalue != null) {
       final selectedTemplates = config.temaplates.firstWhereOrNull((element) => element.name == tplvalue);
-      if (selectedTemplates == null) throw const TemplateNotFound();
+      if (selectedTemplates == null) throw TemplateNotFound('$tplvalue not found.');
       templates.add(selectedTemplates);
     } else {
       final selectedTemplates = logger.chooseAny<TemplateYaml>(

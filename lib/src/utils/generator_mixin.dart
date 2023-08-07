@@ -6,6 +6,7 @@ import '../constants.dart';
 import '../domain/config/replace_variable_properties.dart';
 import '../domain/config/template_yaml.dart';
 import '../domain/exceptions/exceptions.dart';
+import '../localisation.dart';
 import 'config_mixin.dart';
 import 'console_mixin.dart';
 import 'mason_mixin.dart';
@@ -21,7 +22,8 @@ mixin GeneratorMixin on MasonMixin, ConsoleMixin, ConfigMixin {
     if (dir.existsSync()) {
       dir.deleteSync(recursive: true);
     }
-    await createBrick(name: tpl.name, description: tpl.description);
+    // await createBrick(name: tpl.name, description: tpl.description);
+    await makeFromBundle(tpl);
     await Shell.mkdir(tpl.processTagetPath);
     await Shell.cp(tpl.processSourcePath, tpl.processTagetPath);
   }
@@ -36,12 +38,14 @@ mixin GeneratorMixin on MasonMixin, ConsoleMixin, ConfigMixin {
 
   /// Generate a new template
   Future<void> generateTemplate(TemplateYaml tpl) async {
+    final progress = logger.progress(Localisation.generating);
     try {
       await preProcess(tpl);
     } catch (e) {
+      progress.fail();
       throw FolderProcessingFailed('$e');
     }
-
+    progress.update(Localisation.processing);
     final files = Directory(tpl.processTagetPath)
         .listSync(recursive: true)
         .whereType<File>()
@@ -49,25 +53,29 @@ mixin GeneratorMixin on MasonMixin, ConsoleMixin, ConfigMixin {
           (element) => !element.path.endsWith('.DS_Store'),
         )
         .toList();
-    logInfo('files: ${files.length} ');
     for (final _ in files) {
       final file = _;
+      progress.update(Localisation.generatingReplaceContent);
       await replaceContent(tpl, file);
+      progress.update(Localisation.generatingReplacePath);
       final targetPathSegments = await replacePath(tpl, file);
+
       await path(tpl, file, targetPathSegments);
     }
+    progress.update(Localisation.postprocessing);
 
     /// Remote default template
     await postProcess(tpl);
     // done
+    progress.complete('');
   }
 
   /// Copy processed file to target location
   Future<void> path(TemplateYaml tpl, File file, List<String> targetPathSegments) async {
     final newPath = p.join(tpl.processTargetRootPath, targetPathSegments.join(Platform.pathSeparator));
-    logInfo('');
-    logInfo(file.path);
-    logInfo('-> $newPath');
+    // logInfo('');
+    // logInfo(file.path);
+    // logInfo('-> $newPath');
 
     await File(newPath).create(recursive: true);
     await file.rename(newPath);
@@ -182,6 +190,7 @@ mixin GeneratorMixin on MasonMixin, ConsoleMixin, ConfigMixin {
             }
             newSegmentItem = newSegmentItem.replaceAll(i.name, i.value);
           }
+          newSegments.add(newSegmentItem);
         }
       }
       line = "${pre}import '${newSegments.join('/')}';$post";
@@ -206,7 +215,6 @@ mixin GeneratorMixin on MasonMixin, ConsoleMixin, ConfigMixin {
           }
         }
       }
-
       newPathSegments.add(newSegmentItem);
     }
     return newPathSegments;

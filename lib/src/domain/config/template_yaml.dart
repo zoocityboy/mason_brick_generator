@@ -57,7 +57,16 @@ class TemplateYaml {
           Constants.brickFolder,
         ].join(Platform.pathSeparator),
       );
+  String get templateTargetPath => [Constants.bricksFolder, name].join(Platform.pathSeparator);
   String get processTagetPath =>
       p.join([Constants.bricksFolder, name, Constants.brickFolder, ...source.split('/')].join(Platform.pathSeparator));
   String get processSourcePath => source.replaceAll('/', Platform.pathSeparator);
+
+  Map<String, dynamic> varsToJson() {
+    final json = <String, dynamic>{};
+    vars.forEach((key, value) {
+      json[key] = value.toJson();
+    });
+    return json;
+  }
 }

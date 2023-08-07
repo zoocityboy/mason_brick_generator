@@ -1,9 +1,8 @@
-name: mason_tpl
+name: mason_brick_generator
 description: >
-  Generate templates from live app.
-
+  Generate templates from live Source code of your sample app.
 version: 1.0.0
-repository: https://github.com/zoocityboy/mason_tpl
+repository: https://github.com/zoocityboy/mason_brick_generator
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -13,7 +12,10 @@ dependencies:
   checked_yaml: ^2.0.3
   collection: ^1.17.1
   equatable: ^2.0.5
+  json2yaml: ^3.0.1
   json_annotation: ^4.8.1
+  mason: ^0.1.0-dev.50
+  mason_cli: ^0.1.0-dev.1
   mason_logger: ^0.2.8
   meta: ^1.9.1
   path: ^1.8.3
@@ -27,5 +29,5 @@ dev_dependencies:
   test: ^1.21.0
   zoo_lints: ^3.0.0
 executables:
-  mason_tpl:
-  mtpl:
+  mason_brick_generator:
+  mbg:

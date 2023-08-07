@@ -18,7 +18,7 @@ mixin CheckMixin {
     return File(Constants.masonConfigFileName).existsSync();
   }
 
-  /// Check if [mason_tpl] was initialized
+  /// Check if [mason_brick_generator] was initialized
   bool isMasonTplInitialized() {
     return File(
       Constants.masonTplConfigFileName,
