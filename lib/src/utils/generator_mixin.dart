@@ -17,11 +17,11 @@ mixin GeneratorMixin on MasonMixin, ConsoleMixin, ConfigMixin {
   /// Remove previous version and create new folder
   @protected
   Future<void> preProcess(TemplateYaml tpl) async {
-    final path = [Directory.current.path, Constants.bricksFolder, tpl.name].join(Platform.pathSeparator);
-    final dir = Directory(path);
-    if (dir.existsSync()) {
-      dir.deleteSync(recursive: true);
-    }
+    // final path = [Directory.current.path, Constants.bricksFolder, tpl.name].join(Platform.pathSeparator);
+    // final dir = Directory(path);
+    // if (dir.existsSync()) {
+    //   dir.deleteSync(recursive: true);
+    // }
     // await createBrick(name: tpl.name, description: tpl.description);
     await makeFromBundle(tpl);
     await Shell.mkdir(tpl.processTagetPath);
@@ -38,14 +38,15 @@ mixin GeneratorMixin on MasonMixin, ConsoleMixin, ConfigMixin {
 
   /// Generate a new template
   Future<void> generateTemplate(TemplateYaml tpl) async {
-    final progress = logger.progress(Localisation.generating);
+    var progress = logger.progress(Localisation.generating);
     try {
       await preProcess(tpl);
     } catch (e) {
       progress.fail();
       throw FolderProcessingFailed('$e');
     }
-    progress.update(Localisation.processing);
+    progress.complete();
+    progress = logger.progress('${tpl.name} - ${Localisation.processing}');
     final files = Directory(tpl.processTagetPath)
         .listSync(recursive: true)
         .whereType<File>()
@@ -53,30 +54,28 @@ mixin GeneratorMixin on MasonMixin, ConsoleMixin, ConfigMixin {
           (element) => !element.path.endsWith('.DS_Store'),
         )
         .toList();
+    progress.complete();
     for (final _ in files) {
       final file = _;
-      progress.update(Localisation.generatingReplaceContent);
-      await replaceContent(tpl, file);
-      progress.update(Localisation.generatingReplacePath);
-      final targetPathSegments = await replacePath(tpl, file);
 
-      await path(tpl, file, targetPathSegments);
+      /// Replace content
+      await replaceContent(tpl, file);
+
+      /// Replace paths
+      await path(tpl, file, await replacePath(tpl, file));
     }
-    progress.update(Localisation.postprocessing);
+
+    progress = logger.progress(Localisation.postprocessing);
 
     /// Remote default template
     await postProcess(tpl);
     // done
-    progress.complete('');
+    progress.complete();
   }
 
   /// Copy processed file to target location
   Future<void> path(TemplateYaml tpl, File file, List<String> targetPathSegments) async {
     final newPath = p.join(tpl.processTargetRootPath, targetPathSegments.join(Platform.pathSeparator));
-    // logInfo('');
-    // logInfo(file.path);
-    // logInfo('-> $newPath');
-
     await File(newPath).create(recursive: true);
     await file.rename(newPath);
   }
@@ -92,63 +91,6 @@ mixin GeneratorMixin on MasonMixin, ConsoleMixin, ConfigMixin {
     }
     await file.writeAsString(sb.toString());
   }
-
-  // /// Replace tokens in import
-  // @protected
-  // Future<void> replaceImportsInFile(TemplateYaml tpl, File _) async {
-  //   final file = _;
-  //   final sb = StringBuffer();
-  //   final lineContents = file.readAsLinesSync();
-  //   final importLine = RegExp(r"\'(.*?)\'");
-  //   final importLines = lineContents.where(
-  //     (element) => element.startsWith('import '),
-  //   );
-  //   final entries = tpl.replace.where((e) => e.type == ReplaceVariableType.import).toList();
-  //   for (final line in importLines) {
-  //     var newLine = line;
-  //     final importSegments = importLine.firstMatch(newLine)?.group(1);
-  //     if (importSegments != null) {
-  //       final fileSegments = importSegments.split('/');
-  //       final newSegments = <String>[];
-  //       var pre = '';
-  //       var post = '';
-  //       for (final segment in fileSegments) {
-  //         var newSegmentItem = segment;
-  //         for (final i in entries) {
-  //           if (newSegmentItem.contains(i.name) || newSegmentItem == i.name) {
-  //             if (i.prefix != null && i.suffix != null) {
-  //               pre = i.prefix!;
-  //               post = i.suffix!;
-  //             }
-  //             newSegmentItem = newSegmentItem.replaceAll(i.name, i.value);
-  //           }
-  //         }
-  //       }
-  //       newLine = "${pre}import '${newSegments.join('/')}';$post";
-  //     }
-  //     sb.writeln(newLine);
-  //   }
-  //   await file.writeAsString(sb.toString());
-  // }
-
-  // /// Reaplace tokens in document from Template
-  // @protected
-  // Future<void> replaceContentInFile(TemplateYaml tpl, File file, ReplaceVariableType type) async {
-  //   final sb = StringBuffer();
-  //   final lineContents = file.readAsLinesSync();
-  //   final selectedLines = lineContents.where(
-  //     (element) => !element.startsWith('import '),
-  //   );
-  //   final entries = tpl.replace.where((e) => e.type == ReplaceVariableType.content).toList();
-  //   for (final line in selectedLines) {
-  //     var newLine = processLine(tpl, line, ReplaceVariableType.content);
-  //     for (final pair in entries) {
-  //       newLine = newLine.replaceAll(pair.name, pair.value);
-  //     }
-  //     sb.writeln(newLine);
-  //   }
-  //   await file.writeAsString(sb.toString());
-  // }
 
   /// Process line replace
   @protected

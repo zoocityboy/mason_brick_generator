@@ -7,6 +7,7 @@ import '../domain/base/brand_command.dart';
 import '../domain/config/template_yaml.dart';
 import '../domain/exceptions/exceptions.dart';
 import '../domain/extensions/arg_parser.dart';
+import '../domain/extensions/arg_results.dart';
 import '../localisation.dart';
 import '../utils/config_mixin.dart';
 import '../utils/console_mixin.dart';
@@ -24,24 +25,37 @@ class GenerateCommand extends BrandCommand<void> with ConsoleMixin, ConfigMixin,
 
   @override
   FutureOr<void>? run() async {
-    final tplvalue = argResults?[Localisation.templateKey];
-    final templates = <TemplateYaml>[];
     final config = await getConfig();
-
-    if (tplvalue != null) {
-      final selectedTemplates = config.temaplates.firstWhereOrNull((element) => element.name == tplvalue);
-      if (selectedTemplates == null) throw TemplateNotFound('$tplvalue not found.');
-      templates.add(selectedTemplates);
+    final value = argResults?.getTemplateFromArgResults(config.temaplates) ?? (name: null, template: null);
+    final templates = <TemplateYaml>[];
+    if (value.name != null) {
+      if (value.template == null) {
+        logWarning('\nSelected template ${value.name} not found.\nPlease select from available templates.');
+        final selectedTemplates = await chooseTemplates(config.temaplates);
+        templates.addAll(selectedTemplates);
+      } else {
+        templates.add(value.template!);
+      }
     } else {
-      final selectedTemplates = logger.chooseAny<TemplateYaml>(
-        Localisation.generateChoosen,
-        choices: config.temaplates,
-        display: (choice) => choice.asChoice,
-      );
+      final selectedTemplates = await chooseTemplates(config.temaplates);
       templates.addAll(selectedTemplates);
     }
 
-    logger.info('selected: $templates');
+    return generate(templates);
+  }
+
+  /// Select from available templates
+  Future<List<TemplateYaml>> chooseTemplates(List<TemplateYaml> templates) async {
+    final selectedTemplates = logger.chooseAny<TemplateYaml>(
+      Localisation.generateChoosen,
+      choices: templates,
+      display: (choice) => choice.asChoice,
+    );
+    return selectedTemplates;
+  }
+
+  /// Generate selected templates
+  Future<void> generate(List<TemplateYaml> templates) async {
     for (final tpl in templates) {
       await generateTemplate(tpl);
     }

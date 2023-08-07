@@ -1,6 +1,5 @@
 import 'package:args/args.dart';
 
-import '../../constants.dart';
 import '../../localisation.dart';
 
 extension Options on ArgParser {

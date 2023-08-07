@@ -1,11 +1,7 @@
-import 'dart:async';
-
 import 'package:args/command_runner.dart';
 
-import '../constants.dart';
-import '../domain/exceptions/exceptions.dart';
 import '../localisation.dart';
-import '../utils/check_mixin.dart';
+import '../utils/config_mixin.dart';
 import '../utils/console_mixin.dart';
 import 'discover.dart';
 import 'generate.dart';
@@ -14,7 +10,7 @@ import 'list.dart';
 import 'validate.dart';
 
 /// Command Runner for Mason Brick Generator
-class MasonTplCommandRunner extends CommandRunner<void> with CheckMixin, ConsoleMixin {
+class MasonTplCommandRunner extends CommandRunner<void> with ConsoleMixin, ConfigMixin {
   ///
   MasonTplCommandRunner() : super(Localisation.cmd, Localisation.cmdDescription) {
     addCommand(InitCommand());
@@ -28,19 +24,4 @@ class MasonTplCommandRunner extends CommandRunner<void> with CheckMixin, Console
   String get usageFooter => Localisation.cmdFooter;
 
   ///
-  Future<void> initialize() async {
-    if (!isMasonInitialized()) {
-      throw const MasonNotInitialized(
-        Constants.masonConfigFileName,
-      );
-    }
-    if (!isMasonTplInitialized()) {
-      throw const MasonTplNotInitialized(
-        Constants.masonTplConfigFileName,
-      );
-    }
-    if (!isMasonTplInitialized()) {}
-    // final config = await Config.loadFromPubspec();
-    // logger.info('config: $config');
-  }
 }

@@ -73,12 +73,12 @@ mason_brick_generator:
         value: "{{name.snakeCase()}}"
   - template: eit_feature_structure
     description: Embedit Platform Feature Structure
-    source: lib/features/structure
+    source: lib/features/tpl_feature_structure
     replace:
     vars:
       name:
         type: string
-        description: Your name
+        description: Test Name
         default: Dash
         prompt: What is your name?
   # - template: eit_profile
