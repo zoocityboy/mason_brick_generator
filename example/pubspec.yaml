@@ -46,6 +46,6 @@ dev_dependencies:
     sdk: flutter
   json_serializable: ^6.7.1
   mason_brick_generator:
-    path: ../
+    path: ../packages/mason_brick_generator
   test: ^1.21.0
   zoo_lints: ^3.0.0
