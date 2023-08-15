@@ -1,0 +1,17 @@
+# {{description}}
+mason_brick_generator:
+  - template: { { name.snakeCase() } }
+    description: { { description } }
+    source: lib/features/tpl_feature_name
+    vars:
+      name:
+        type: string
+        description: Name of feature
+        prompt: Feature name
+    replace:
+      - name: TplFeatureName
+        type: content
+        value: "{{name.pascalCase()}}"
+      - name: tpl_feature_name
+        type: import
+        value: "{{name.snakeCase()}}"
