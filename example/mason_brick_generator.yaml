@@ -75,6 +75,9 @@ mason_brick_generator:
     description: Embedit Platform Feature Structure
     source: lib/features/tpl_feature_structure
     replace:
+      - name: "test"
+        type: path
+        value: ""
     vars:
       name:
         type: string

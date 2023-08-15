@@ -6,7 +6,6 @@
     "configurations": [
         {
             "name": "create",
-            "cwd": "example",
             "request": "launch",
             "type": "dart",
             "program": "mbg",
@@ -16,7 +15,6 @@
         },
         {
             "name": "generate",
-            "cwd": "example",
             "request": "launch",
             "type": "dart",
             "program": "../packages/mason_brick_generator/bin/mason_brick_generator.dart",
@@ -26,7 +24,6 @@
         },
         {
             "name": "generate - eit_feature",
-            "cwd": "example",
             "request": "launch",
             "type": "dart",
             "program": "../packages/mason_brick_generator/bin/mason_brick_generator.dart",
@@ -38,7 +35,6 @@
         },
         {
             "name": "init",
-            "cwd": "example",
             "request": "launch",
             "type": "dart",
             "program": "../packages/mason_brick_generator/bin/mason_brick_generator.dart",
@@ -48,7 +44,6 @@
         },
         {
             "name": "list",
-            "cwd": "example",
             "request": "launch",
             "type": "dart",
             "program": "../packages/mason_brick_generator/bin/mason_brick_generator.dart",
@@ -58,7 +53,6 @@
         },
         {
             "name": "validate",
-            "cwd": "example",
             "request": "launch",
             "type": "dart",
             "program": "../packages/mason_brick_generator/bin/mason_brick_generator.dart",
