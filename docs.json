@@ -1,0 +1,17 @@
+{
+  "name": "Mason Brick Generator",
+  "description": "This project serves to simplify the creation of a Mason brick from existing code that can be executed, validated, etc. Mason Brick is a great tool, but unfortunately there are some fundamental problems that this project is trying to solve.",
+  "theme": "#9D212A",
+  "logo": "/assets/mason_brick_generator_icon.png",
+  "darkLogo": "/assets/mason_brick_generator_icon.png",
+  "sidebar": [
+    [
+      "Home",
+      "/"
+    ],
+    [
+      "Another Page",
+      "/another-page"
+    ]
+  ]
+}

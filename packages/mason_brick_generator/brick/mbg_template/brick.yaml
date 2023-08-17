@@ -1,5 +1,5 @@
-name: tpl_template_name
-description: tpl_template_description
+name: mbg_template
+description: Basic template for new Brick
 
 # The following defines the brick repository url.
 # Uncomment and update the following line before publishing the brick.
@@ -26,3 +26,7 @@ environment:
 #  * a list of values (enums only)
 #  * an optional separator (list only)
 vars:
+  name:
+    type: string
+    description: Name of feature
+    prompt: Feature name

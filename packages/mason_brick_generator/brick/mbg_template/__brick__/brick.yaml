@@ -1,5 +1,5 @@
-name: tpl_template_name
-description: tpl_template_description
+name: {{mbg_template_name}}
+description: {{mbg_template_description}}
 
 # The following defines the brick repository url.
 # Uncomment and update the following line before publishing the brick.
@@ -25,8 +25,4 @@ environment:
 #  * an optional prompt phrase used when asking for the variable
 #  * a list of values (enums only)
 #  * an optional separator (list only)
-vars:
-  name:
-    type: string
-    description: Name of feature
-    prompt: Feature name
+{{mbg_template_vars}}

@@ -1,16 +1,11 @@
 import 'dart:async';
 
-import 'package:mason_logger/mason_logger.dart';
-
 import '../constants.dart';
 import '../domain/base/brand_command.dart';
 import '../localisation.dart';
-import '../utils/config_mixin.dart';
-import '../utils/console_mixin.dart';
-import '../utils/mason_mixin.dart';
 
 ///
-class ListCommand extends BrandCommand<void> with ConfigMixin, ConsoleMixin, MasonMixin {
+class ListCommand extends BrandCommand<void> {
   ListCommand() : super(Localisation.listCommandName, Localisation.listCommandDescription);
 
   @override
@@ -18,14 +13,16 @@ class ListCommand extends BrandCommand<void> with ConfigMixin, ConsoleMixin, Mas
 
   @override
   FutureOr<void>? run() async {
-    final progress = logger.progress('Listing...', options: const ProgressOptions());
-
+    final progress = logger.progress(Localisation.listProcessing);
     final list = await getBricks();
     progress.cancel();
-    logInfo('\nAvailable templates\n');
+    logInfo(Localisation.listResultLabel);
     for (final template in list) {
-      final index = list.indexOf(template);
-      logInfo(' ${index + 1}. ${template.asChoice}');
+      logInfo(' ⌙ ${template.asChoice}');
+    }
+    final result = logger.confirm(Localisation.listPrompGenerte);
+    if (result) {
+      await runner?.run([Localisation.generateCommandName]);
     }
   }
 }

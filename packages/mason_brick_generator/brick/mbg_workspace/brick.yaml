@@ -1,0 +1,17 @@
+name: mbg_workspace
+description: Mason Brick Generator
+version: 0.1.0+1
+
+environment:
+  mason: ">=0.1.0-dev.50 <0.1.0"
+vars:
+  mbg_name:
+    type: string
+    description: Your name
+    default: mbg_workspace
+    prompt: Workspace name
+  mbg_description:
+    type: string
+    description: Template description
+    default: Mason Brick Generator workspace
+    prompt: Workspace description

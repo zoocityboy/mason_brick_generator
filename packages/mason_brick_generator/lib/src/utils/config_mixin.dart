@@ -2,7 +2,7 @@ import 'package:universal_io/io.dart';
 
 import '../constants.dart';
 import '../domain/config/config_yaml.dart';
-import '../domain/exceptions/exceptions.dart';
+import 'processes.dart';
 
 ///
 mixin ConfigMixin {
@@ -28,25 +28,26 @@ mixin ConfigMixin {
     ).existsSync();
   }
 
+  String get sampleTemplatePath =>
+      [Directory.current.path, 'lib', Constants.masonSampleTamplateName].join(Platform.pathSeparator);
+  bool existsSampleTemplate() => Directory(sampleTemplatePath).existsSync();
+
+  String get sampleBrickPath =>
+      [Directory.current.path, Constants.bricksFolder, Constants.masonSampleBrickName].join(Platform.pathSeparator);
+  bool existsSampleBrick() => Directory(sampleBrickPath).existsSync();
+
+  Future<void> initializeMason() async {
+    await Shell.run('mason', ['init']);
+  }
+
+  Future<void> installMason() async {
+    await Shell.run('dart', ['pub', 'global', 'activate', 'mason']);
+  }
+
   ///
   Future<ConfigYaml> getConfig() async {
     return config ??= await ConfigYaml.loadFromPubspec();
   }
 
   ConfigYaml? config;
-
-  Future<void> initialize() async {
-    config ??= await ConfigYaml.loadFromPubspec();
-    if (!isMasonInitialized()) {
-      throw const MasonNotInitialized(
-        Constants.masonConfigFileName,
-      );
-    }
-    if (!isMasonTplInitialized()) {
-      throw const MasonTplNotInitialized(
-        Constants.masonTplConfigFileName,
-      );
-    }
-    if (!isMasonTplInitialized()) {}
-  }
 }

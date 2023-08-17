@@ -22,8 +22,16 @@ class InvalidTemplate extends MasonTplException {
 }
 
 /// Mason is not initialized
+class MasonNotInstalled extends MasonTplException {
+  const MasonNotInstalled(this.path) : super('Mason is not installed yet.');
+  final String path;
+
+  @override
+  String toString() => '$message $path';
+}
+
 class MasonNotInitialized extends MasonTplException {
-  const MasonNotInitialized(this.path) : super('Mason not initialized');
+  const MasonNotInitialized(this.path) : super('Mason is not initialized yet.');
   final String path;
 
   @override

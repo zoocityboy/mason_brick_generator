@@ -3,10 +3,9 @@ import 'dart:async';
 import '../constants.dart';
 import '../domain/base/brand_command.dart';
 import '../localisation.dart';
-import '../utils/console_mixin.dart';
 
 /// Check source code and suggest new templates
-class DiscoverCommand extends BrandCommand<void> with ConsoleMixin {
+class DiscoverCommand extends BrandCommand<void> {
   DiscoverCommand() : super(Localisation.discoverCommandName, Localisation.discoverCommandDescription);
 
   @override
