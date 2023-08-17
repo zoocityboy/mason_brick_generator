@@ -4,6 +4,9 @@
   "theme": "#9D212A",
   "logo": "/assets/mason_brick_generator_icon.png",
   "darkLogo": "/assets/mason_brick_generator_icon.png",
+  "socialPreview": [
+    
+  ],
   "sidebar": [
     [
       "Home",
