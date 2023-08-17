@@ -1,4 +1,4 @@
-name: tpl_template_name_hooks
+name: mbg_template_hooks
 
 environment:
   sdk: ">=2.12.0 <3.0.0"

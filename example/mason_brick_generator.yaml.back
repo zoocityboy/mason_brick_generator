@@ -1,0 +1,109 @@
+mason_brick_generator:
+  - template: eit_feature
+    description: Feature template for Embedit Platform.
+    source: lib/features/tpl_feature_name
+    vars:
+      name:
+        type: string
+        description: Name of feature
+        prompt: Feature name
+      state_management:
+        type: enum
+        default: bloc
+        description: The features state management
+        prompt: What is the features state management?
+        values:
+          - bloc
+          - cubit
+          - none
+      list:
+        type: boolean
+        description: Generate list component
+        prompt: Generate List Component?
+        default: true
+      detail:
+        type: boolean
+        description: Generate Detail component
+        prompt: Generate Detail Component?
+        default: true
+    replace:
+      - name: "isdetail_"
+        type: path
+        value: ""
+        prefix: "{{#detail}}"
+        suffix: "{{/detail}}"
+      - name: "islist_"
+        type: path
+        value: ""
+        prefix: "{{#list}}"
+        suffix: "{{/list}}"
+      - name: "isbloc_"
+        type: path
+        value: ""
+      - name: "iscubit_"
+        type: path
+        value: ""
+      - name: "isdetail_"
+        type: path
+        value: ""
+      - name: tpl_feature_name
+        type: path
+        value: "{{name.snakeCase()}}"
+      # content
+      - name: tpl_feature_name_detail
+        type: content
+        value: "{{name.snakeCase()}}_detail"
+      - name: tpl_feature_name_list
+        type: content
+        value: "{{name.snakeCase()}}_list"
+      - name: tpl_feature_name
+        type: content
+        value: "{{name.snakeCase()}}"
+      - name: TplFeatureNameDetail
+        type: content
+        value: "{{name.pascalCase()}}Detail"
+      - name: TplFeatureNameList
+        type: content
+        value: "{{name.pascalCase()}}List"
+      - name: TplFeatureName
+        type: content
+        value: "{{name.pascalCase()}}"
+      - name: tpl_feature_name
+        type: import
+        value: "{{name.snakeCase()}}"
+  - template: eit_feature_structure
+    description: Embedit Platform Feature Structure
+    source: lib/features/tpl_feature_structure
+    replace:
+      - name: "test"
+        type: path
+        value: ""
+    vars:
+      name:
+        type: string
+        description: Test Name
+        default: Dash
+        prompt: What is your name?
+  # - template: eit_profile
+  #   description: Profile template
+  #   source: src/features/tpl_profile_name
+  #   path:
+  #   content:
+  #     tpl_profile_name: "{{name.snakeCase()}}"
+  #   vars:
+  #     name:
+  #       type: string
+  #       description: Your name
+  #       default: Dash
+  #       prompt: What is your name?
+  # - template: eit_auth
+  #   description: Template for Athorization module
+  #   source: src/features/tpl_auth_name
+  #   path:
+  #   content:
+  #   vars:
+  #     name:
+  #       type: string
+  #       description: Your name
+  #       default: Dash
+  #       prompt: What is your name?

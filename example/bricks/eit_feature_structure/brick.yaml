@@ -30,5 +30,5 @@ vars:
     type: string
     description: Test Name
     default: Dash
-    prompt: "What is your name?"
+    prompt: &quot;What is your name?&quot;
 

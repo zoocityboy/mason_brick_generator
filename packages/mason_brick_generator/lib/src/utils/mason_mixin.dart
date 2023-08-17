@@ -2,9 +2,12 @@ import 'package:json2yaml/json2yaml.dart';
 import 'package:mason/mason.dart';
 import 'package:universal_io/io.dart';
 
-import '../../bundle/tpl_template_name_bundle.dart';
+import '../../bundle/mbg_template_bundle.dart';
+import '../../bundle/mbg_workspace_bundle.dart';
 import '../constants.dart';
 import '../domain/config/template_yaml.dart';
+import '../domain/exceptions/exceptions.dart';
+import '../localisation.dart';
 import 'config_mixin.dart';
 import 'console_mixin.dart';
 
@@ -19,13 +22,9 @@ mixin MasonMixin on ConsoleMixin, ConfigMixin {
     return config.masonTpl;
   }
 
-  ///
-  Future<void> exists() async {}
-
   /// remove brick folder if exists
   Future<void> removeBrick(String name) async {
-    final path = [Directory.current.path, Constants.bricksFolder, name]
-        .join(Platform.pathSeparator);
+    final path = [Directory.current.path, Constants.bricksFolder, name].join(Platform.pathSeparator);
     final dir = Directory(path);
     if (dir.existsSync()) {
       await dir.delete(recursive: true);
@@ -36,29 +35,75 @@ mixin MasonMixin on ConsoleMixin, ConfigMixin {
     logger.alert('Do you want to continue?');
   }
 
-  Future<void> makeFromBundle(TemplateYaml tpl) async {
-    final vars = tpl.varsToJson();
-    final generator = await MasonGenerator.fromBundle(tplTemplateNameBundle);
+  Future<void> initialize() async {
+    if (!isMasonInstalled()) {
+      logger.warn(Localisation.initQuestionInstallMason);
+      final response = logger.confirm(Localisation.initPromptInititalizeMason);
+      if (!response) {
+        throw const MasonNotInitialized(
+          Constants.masonConfigFileName,
+        );
+      }
+      final progress = logger.progress(Localisation.initProcessingMasonInstallation);
+      await installMason();
+      progress.complete();
+    }
+    if (!isMasonInitialized()) {
+      logger.warn(Localisation.initQuestionInititalizeMason);
+      final response = logger.confirm(Localisation.initPromptInititalizeMason);
+      if (!response) {
+        throw const MasonNotInitialized(
+          Constants.masonConfigFileName,
+        );
+      }
+      final progress = logger.progress(Localisation.initProcessingMasonInitialization);
+      await initializeMason();
+      progress.complete();
+    }
+  }
+
+  Future<void> desetroy() async {
+    if (isMasonInitialized()) {
+      File(Constants.masonConfigFileName).deleteSync(recursive: true);
+    }
+    if (isMasonTplInitialized()) {
+      File(Constants.masonTplConfigFileName).deleteSync(recursive: true);
+    }
+    if (existsSampleTemplate()) {
+      Directory(sampleTemplatePath).deleteSync(recursive: true);
+    }
+    if (existsSampleBrick()) {
+      Directory(sampleBrickPath).deleteSync(recursive: true);
+    }
+  }
+}
+mixin MasonBrickMixin on MasonMixin {
+  Future<void> makeTemplateFromBundle(TemplateYaml tpl) async {
+    final generator = await MasonGenerator.fromBundle(mbgTemplateBundle);
+    final data = {'vars': tpl.varsToJson()};
     await generator.generate(
       DirectoryGeneratorTarget(Directory(tpl.templateTargetPath)),
       logger: logger,
-      vars: vars,
+      vars: {
+        'mbg_template_name': tpl.name,
+        'mbg_template_description': tpl.description,
+        'mbg_template_vars': json2yaml(data),
+      },
     );
-    await processBundle(tpl);
   }
-
-  /// Process basic bundle with custom values
-  Future<void> processBundle(TemplateYaml tpl) async {
-    final directory = Directory(tpl.templateTargetPath);
-    if (!directory.existsSync()) directory.createSync(recursive: true);
-    directory.listSync().whereType<File>().forEach((file) {
-      var content = file.readAsStringSync();
-      final data = {'vars': tpl.varsToJson()};
-      content = content
-          .replaceAll('tpl_template_name', tpl.name)
-          .replaceAll('tpl_template_description', tpl.description)
-          .replaceAll('vars:', json2yaml(data));
-      file.writeAsStringSync(content);
-    });
+}
+mixin MasonWorkspaceMixin on MasonMixin {
+  Future<void> makeWorkspaceFromBundle() async {
+    final generator = await MasonGenerator.fromBundle(mbgWorkspaceBundle);
+    await generator.generate(
+      DirectoryGeneratorTarget(Directory.current),
+      logger: logger,
+      vars: {
+        'mbg_name': 'Mason Brick Generator - wildest animal in the zoo.',
+        'mbg_description': 'This is configuration file for Mason Brick Generator',
+        'mbg_file_class_name': '{{name.snakeCase()}}',
+        'mbg_var_class_name': '{{name.pascalCase()}}',
+      },
+    );
   }
 }

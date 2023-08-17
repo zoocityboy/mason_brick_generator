@@ -1,5 +1,5 @@
-# MasonBrickGeneratorWildestAnimalInTheZoo
-# This is configuration file for Mason Brick Generator
+# {{mbg_name.pascalCase()}}
+# {{mbg_description}}
 mason_brick_generator:
   - template: mbg_sample
     description: Sample class name
@@ -13,7 +13,7 @@ mason_brick_generator:
     replace:
       - name: mbg_sample_name
         type: path
-        value: "{{name.snakeCase()}}"
+        value: "{{mbg_file_class_name}}"
       - name: MbgSampleName
         type: content
-        value: "{{name.pascalCase()}}"
+        value: "{{mbg_var_class_name}}"

@@ -13,17 +13,11 @@ import 'mason_mixin.dart';
 import 'processes.dart';
 
 ///
-mixin GeneratorMixin on MasonMixin, ConsoleMixin, ConfigMixin {
+mixin GeneratorMixin on MasonMixin, MasonBrickMixin, MasonWorkspaceMixin, ConsoleMixin, ConfigMixin {
   /// Remove previous version and create new folder
   @protected
   Future<void> preProcess(TemplateYaml tpl) async {
-    // final path = [Directory.current.path, Constants.bricksFolder, tpl.name].join(Platform.pathSeparator);
-    // final dir = Directory(path);
-    // if (dir.existsSync()) {
-    //   dir.deleteSync(recursive: true);
-    // }
-    // await createBrick(name: tpl.name, description: tpl.description);
-    await makeFromBundle(tpl);
+    await makeTemplateFromBundle(tpl);
     await Shell.mkdir(tpl.processTagetPath);
     await Shell.cp(tpl.processSourcePath, tpl.processTagetPath);
   }
@@ -41,11 +35,12 @@ mixin GeneratorMixin on MasonMixin, ConsoleMixin, ConfigMixin {
     var progress = logger.progress(Localisation.generating);
     try {
       await preProcess(tpl);
+      progress.complete();
     } catch (e) {
       progress.fail();
       throw FolderProcessingFailed('$e');
     }
-    progress.complete();
+
     progress = logger.progress('${tpl.name} - ${Localisation.processing}');
     final files = Directory(tpl.processTagetPath)
         .listSync(recursive: true)
@@ -57,12 +52,16 @@ mixin GeneratorMixin on MasonMixin, ConsoleMixin, ConfigMixin {
     progress.complete();
     for (final _ in files) {
       final file = _;
+      logInfo('$file');
 
       /// Replace content
       await replaceContent(tpl, file);
 
+      ///
+      final value = await replacePath(tpl, file);
+
       /// Replace paths
-      await path(tpl, file, await replacePath(tpl, file));
+      await path(tpl, file, value);
     }
 
     progress = logger.progress(Localisation.postprocessing);
@@ -144,6 +143,7 @@ mixin GeneratorMixin on MasonMixin, ConsoleMixin, ConfigMixin {
   @protected
   Future<List<String>> replacePath(TemplateYaml tpl, File file) async {
     final filePathSegments = file.path.split(Platform.pathSeparator).sublist(3);
+    print('${file.path} -> $filePathSegments');
     final newPathSegments = <String>[];
     final entries = tpl.replace.where((e) => e.type == ReplaceVariableType.path).toList();
     for (final segment in filePathSegments) {
@@ -159,6 +159,7 @@ mixin GeneratorMixin on MasonMixin, ConsoleMixin, ConfigMixin {
       }
       newPathSegments.add(newSegmentItem);
     }
+    print('${file.path} -> $newPathSegments');
     return newPathSegments;
   }
 

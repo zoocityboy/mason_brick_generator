@@ -1,21 +1,16 @@
 import 'dart:async';
 
-import 'package:collection/collection.dart';
-
 import '../constants.dart';
 import '../domain/base/brand_command.dart';
 import '../domain/config/template_yaml.dart';
-import '../domain/exceptions/exceptions.dart';
 import '../domain/extensions/arg_parser.dart';
 import '../domain/extensions/arg_results.dart';
 import '../localisation.dart';
-import '../utils/config_mixin.dart';
-import '../utils/console_mixin.dart';
 import '../utils/generator_mixin.dart';
 import '../utils/mason_mixin.dart';
 
 /// Select and generate current template
-class GenerateCommand extends BrandCommand<void> with ConsoleMixin, ConfigMixin, MasonMixin, GeneratorMixin {
+class GenerateCommand extends BrandCommand<void> with MasonBrickMixin, MasonWorkspaceMixin, GeneratorMixin {
   /// Adding a template option
   GenerateCommand() : super(Localisation.generateCommandName, Localisation.generateCommandDescription) {
     argParser.addTemplateOption();

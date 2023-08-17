@@ -49,7 +49,7 @@ class TemplateYaml {
     return '$name - $description';
   }
 
-  String get asChoice => '[$name] $description';
+  String get asChoice => '[$name]: $description';
   String get processTargetRootPath => p.join(
         [
           Constants.bricksFolder,

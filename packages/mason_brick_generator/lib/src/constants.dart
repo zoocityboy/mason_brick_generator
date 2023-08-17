@@ -11,6 +11,8 @@ abstract class Constants {
   static const String masonTplConfigFileName = 'mason_brick_generator.yaml';
   static const String masonConfigFileName = 'mason.yaml';
   static const String masonTplKey = 'mason_brick_generator';
+  static const String masonSampleTamplateName = 'mbg_sample_name';
+  static const String masonSampleBrickName = 'mbg_sample';
 
   /// Folder structure
   static const String bricksFolder = 'bricks';

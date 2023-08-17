@@ -25,6 +25,10 @@ class Shell {
     }
     return _Cmd.run('mkdir', ['-p', destination]);
   }
+
+  static Future<void> run(String command, List<String> args) {
+    return _Cmd.run(command, args);
+  }
 }
 
 class _Cmd {
