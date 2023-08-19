@@ -3,14 +3,14 @@ import 'dart:async';
 import '../constants.dart';
 import '../domain/base/brand_command.dart';
 import '../domain/extensions/arg_parser.dart';
-import '../localisation.dart';
-import '../utils/validate_mixin.dart';
+import '../l.dart';
+import '../mixins/validate_mixin.dart';
 
 /// Validate current template settings.
 /// - check if every template variable is defined
 class ValidateCommand extends BrandCommand<void> with ValidateMixin {
   /// Adding a template option
-  ValidateCommand() : super(Localisation.validateCommandName, Localisation.validateCommandDescription) {
+  ValidateCommand() : super(L.validateCommandName, L.validateCommandDescription) {
     argParser.addTemplateOption();
   }
 

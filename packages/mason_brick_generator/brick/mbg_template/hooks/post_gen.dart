@@ -1,5 +1,6 @@
 import 'package:mason/mason.dart';
 
 void run(HookContext context) {
-  // TODO: add post-generation logic.
+  context.logger.info('hello {{name}}!');
+  context.logger.info('vars: {{vars}}');
 }

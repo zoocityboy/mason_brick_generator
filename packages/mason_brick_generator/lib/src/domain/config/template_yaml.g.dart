@@ -16,6 +16,7 @@ TemplateYaml _$TemplateYamlFromJson(Map json) => $checkedCreate(
             'template',
             'description',
             'source',
+            'files',
             'vars',
             'replace'
           ],
@@ -23,7 +24,12 @@ TemplateYaml _$TemplateYamlFromJson(Map json) => $checkedCreate(
         final val = TemplateYaml(
           name: $checkedConvert('template', (v) => v as String),
           description: $checkedConvert('description', (v) => v as String),
-          source: $checkedConvert('source', (v) => v as String),
+          source: $checkedConvert('source', (v) => v as String? ?? '/'),
+          files: $checkedConvert(
+              'files',
+              (v) =>
+                  (v as List<dynamic>?)?.map((e) => e as String).toList() ??
+                  const []),
           replace: $checkedConvert(
               'replace',
               (v) =>
@@ -48,6 +54,7 @@ Map<String, dynamic> _$TemplateYamlToJson(TemplateYaml instance) {
     'template': instance.name,
     'description': instance.description,
     'source': instance.source,
+    'files': instance.files,
   };
 
   void writeNotNull(String key, dynamic value) {

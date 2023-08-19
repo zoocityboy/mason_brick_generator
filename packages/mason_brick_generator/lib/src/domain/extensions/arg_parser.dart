@@ -1,18 +1,18 @@
 import 'package:args/args.dart';
 
-import '../../localisation.dart';
+import '../../l.dart';
 
 extension Options on ArgParser {
   void addTemplateOption() {
     // ignore: unnecessary_this
-    this.addOption(Localisation.templateKey, abbr: 't', help: Localisation.templateHelp);
+    this.addOption(L.templateKey, abbr: 't', help: L.templateHelp);
   }
 
   void addCleanFlag() {
     addFlag(
-      Localisation.initCleanCommandName,
+      L.initCleanCommandName,
       abbr: 'c',
-      help: Localisation.initCleanCommandDescription,
+      help: L.initCleanCommandDescription,
     );
   }
 }

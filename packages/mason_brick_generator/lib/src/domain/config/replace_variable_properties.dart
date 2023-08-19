@@ -1,8 +1,7 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, avoid_dynamic_calls
 import 'dart:convert';
 
 import 'package:json_annotation/json_annotation.dart';
-import 'package:mason_logger/mason_logger.dart';
 import 'package:meta/meta.dart';
 
 part 'replace_variable_properties.g.dart';
@@ -81,8 +80,14 @@ class ReplaceVariableProperties {
   }
 }
 
-class X {
-  static Logger logger = Logger();
+extension ReplaceVariablePropertiesExtension on List<ReplaceVariableProperties> {
+  Map<String, bool> toSearchMapWithDefault({bool value = false}) {
+    final found = <String, bool>{};
+    for (final x in this) {
+      found[x.name] = false;
+    }
+    return found;
+  }
 }
 
 /// {@template vars_converter}
@@ -100,18 +105,13 @@ class PathConverter implements JsonConverter<Map<String, ReplaceVariableProperti
   @override
   Map<String, ReplaceVariableProperties> fromJson(dynamic value) {
     final dynamic value0 = value is String ? json.decode(value) : value;
-    X.logger.info('$value0');
     if (value0 is List) {
-      for (final v in value0) {
-        X.logger.info('$v');
-      }
       return <String, ReplaceVariableProperties>{
         for (final v in value0)
           v['name'] as String: ReplaceVariableProperties.fromJson(Map<String, dynamic>.from(v as Map)),
       };
     }
     if (value0 is Map) {
-      X.logger.info('$value0');
       return value0.map(
         (dynamic key, dynamic value) {
           final entry = MapEntry(

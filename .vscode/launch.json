@@ -37,6 +37,30 @@
             ],
         },
         {
+            "name": "generate - mbg_flavor",
+            "cwd": "example",
+            "request": "launch",
+            "type": "dart",
+            "program": "../packages/mason_brick_generator/bin/mason_brick_generator.dart",
+            "args": [
+                "generate",
+                "-t",
+                "mbg_flavor"
+            ],
+        },
+        {
+            "name": "generate - mbg_sample",
+            "cwd": "example",
+            "request": "launch",
+            "type": "dart",
+            "program": "../packages/mason_brick_generator/bin/mason_brick_generator.dart",
+            "args": [
+                "generate",
+                "-t",
+                "mbg_sample"
+            ],
+        },
+        {
             "name": "init",
             "cwd": "example",
             "request": "launch",

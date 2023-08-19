@@ -5,11 +5,11 @@ import 'package:args/command_runner.dart';
 // ignore: implementation_imports
 import 'package:args/src/utils.dart' as utils;
 
-import '../../localisation.dart';
+import '../../l.dart';
 
 extension CommandX<T> on Command<T> {
   String toUsage() {
-    return extWrap('${Localisation.icon} $description\n\n') + usageWithoutDescription;
+    return extWrap('${L.icon} $description\n\n') + usageWithoutDescription;
   }
 
   String extWrap(String text, {int? hangingIndent}) {

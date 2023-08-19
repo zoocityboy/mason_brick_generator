@@ -5,14 +5,14 @@ import '../domain/base/brand_command.dart';
 import '../domain/config/template_yaml.dart';
 import '../domain/extensions/arg_parser.dart';
 import '../domain/extensions/arg_results.dart';
-import '../localisation.dart';
-import '../utils/generator_mixin.dart';
-import '../utils/mason_mixin.dart';
+import '../l.dart';
+import '../mixins/generator_mixin.dart';
+import '../mixins/mason_mixin.dart';
 
 /// Select and generate current template
 class GenerateCommand extends BrandCommand<void> with MasonBrickMixin, MasonWorkspaceMixin, GeneratorMixin {
   /// Adding a template option
-  GenerateCommand() : super(Localisation.generateCommandName, Localisation.generateCommandDescription) {
+  GenerateCommand() : super(L.generateCommandName, L.generateCommandDescription) {
     argParser.addTemplateOption();
   }
   @override
@@ -42,7 +42,7 @@ class GenerateCommand extends BrandCommand<void> with MasonBrickMixin, MasonWork
   /// Select from available templates
   Future<List<TemplateYaml>> chooseTemplates(List<TemplateYaml> templates) async {
     final selectedTemplates = logger.chooseAny<TemplateYaml>(
-      Localisation.generateChoosen,
+      L.generateChoosen,
       choices: templates,
       display: (choice) => choice.asChoice,
     );

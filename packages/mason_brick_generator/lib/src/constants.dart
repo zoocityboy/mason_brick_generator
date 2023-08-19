@@ -17,8 +17,13 @@ abstract class Constants {
   /// Folder structure
   static const String bricksFolder = 'bricks';
   static const String brickFolder = '__brick__';
+  static const String brickSourceFolder = '__brick_source__';
   static const String templateBundle = 'bundle/tpl_template_name.bundle';
 
   /// RegExp
   static RegExp importLineContent = RegExp(r"\'(.*?)\'");
+
+  /// Mason Brick Generator
+  static const String brickVersion = '"1.0.0+1"';
+  static const String brickMasonRange = '">=0.1.0-dev.50 <0.1.0"';
 }

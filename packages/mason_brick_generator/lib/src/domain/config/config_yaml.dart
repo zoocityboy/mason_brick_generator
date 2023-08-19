@@ -34,18 +34,6 @@ class ConfigYaml {
     final configFile = File(Constants.masonTplConfigFileName);
     if (!configFile.existsSync()) throw const MasonTplConfigFileNotFound();
 
-    // /// Load the pubspec file
-    // final pubspec = await configFile.readAsString();
-    // final yaml = loadYaml(pubspec) as YamlMap;
-
-    // /// Check if mason_brick_generator key exists
-    // if (!yaml.containsKey(Constants.masonTplKey)) {
-    //   throw const TemplateNotFound();
-    // }
-
-    // if (yaml[Constants.masonTplKey] is! YamlList) {
-    //   throw const InvalidTemplate();
-    // }
     final configYaml = checkedYamlDecode(
       configFile.readAsStringSync(),
       (m) => ConfigYaml.fromJson(m!),

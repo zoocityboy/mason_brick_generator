@@ -1,5 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import '../../constants.dart';
+import '../../l.dart';
+
 /// Base Exception for Mason Brick Generator
 class MasonTplException implements Exception {
   const MasonTplException(this.message);
@@ -8,7 +11,7 @@ class MasonTplException implements Exception {
 
 /// Configuration file not found on project
 class MasonTplConfigFileNotFound extends MasonTplException {
-  const MasonTplConfigFileNotFound() : super('mason_brick_generator.yaml not found');
+  const MasonTplConfigFileNotFound() : super('${Constants.masonTplConfigFileName} ${L.notFound}');
 }
 
 /// Template not found in configuration
@@ -18,7 +21,7 @@ class TemplateNotFound extends MasonTplException {
 
 /// Invalid format of template
 class InvalidTemplate extends MasonTplException {
-  const InvalidTemplate() : super('Invalid template format');
+  const InvalidTemplate(String? message) : super(message ?? 'Invalid template format');
 }
 
 /// Mason is not initialized

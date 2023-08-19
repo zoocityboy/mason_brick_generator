@@ -1,8 +1,8 @@
 import 'package:args/command_runner.dart';
 
-import '../../utils/config_mixin.dart';
-import '../../utils/console_mixin.dart';
-import '../../utils/mason_mixin.dart';
+import '../../mixins/config_mixin.dart';
+import '../../mixins/console_mixin.dart';
+import '../../mixins/mason_mixin.dart';
 import '../extensions/command.dart';
 
 /// Brand command for change style
